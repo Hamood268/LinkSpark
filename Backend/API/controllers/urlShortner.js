@@ -3,17 +3,20 @@ const schema = require("../../Database/Schema/urlSchema.js");
 const { body, validationResult } = require("express-validator");
 const router = express.Router();
 
-async function shortneningUrl() {
+function generateShortCode() {
   const length = 6;
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let id = "";
   for (let i = 0; i < length; i++) {
     id += chars.charAt(Math.floor(Math.random() * chars.length));
   }
+  return id;
+}
+
+async function shortneningUrl() {
 
   router.post(
-    "/shorten",
+    "/",
     [body("url").notEmpty().withMessage("URL is required")],
     async (req, res) => {
       try {
@@ -29,6 +32,17 @@ async function shortneningUrl() {
 
         console.log("User submitted URL:", url);
 
+      const shortCode = generateShortCode();
+      
+      const existingUrl = await schema.findOne({ shortenUrl: shortCode });
+      if (existingUrl) {
+        // Generate new code if collision occurs
+        return res.status(500).json({
+          success: false,
+          message: "Code generation collision. Please try again."
+        });
+      }
+
         const savedUrl = new schema({
           url: url,
           shortenUrl: id,
@@ -40,8 +54,9 @@ async function shortneningUrl() {
         const response = {
           success: true,
           originalUrl: url,
-          shortCode: id,
-          shortenedUrl: `'http://localhost:8000'/${shortCode}`,
+          shortCode: shortCode,
+          shortenedUrl: process.env.BaseURl`${shortCode}`,
+          visits: 0,
           createdAt: savedUrl.createdAt,
         };
 
