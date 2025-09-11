@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkSpark - URL Shortener</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="./images/LinkSpark.png">
+</head>
+<body>
+    <!-- Animated Background Sparkles -->
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+
+    <div class="container">
+        <div class="logo">LinkSpark</div>
+        <div class="subtitle">Shorten URLs with a golden touch</div>
+        
+        <form class="url-form" id="urlForm">
+            <div class="input-group">
+                <input 
+                    type="url" 
+                    class="url-input" 
+                    id="originalUrl" 
+                    placeholder="Enter your long URL here..."
+                    required
+                >
+            </div>
+            <button type="submit" class="shorten-btn" id="shortenBtn">
+                ✨ Shorten URL
+            </button>
+        </form>
+
+        <!-- Result Box (Initially Hidden) -->
+        <div class="result-box" id="resultBox">
+            <div class="result-title">🎉 Your Link is Ready!</div>
+            
+            <div class="url-info">
+                <div class="url-label">Original URL</div>
+                <div class="url-value" id="originalUrlDisplay">
+                    https://example.com/very-long-url-that-needs-shortening
+                    <button class="copy-btn" onclick="copyToClipboard('originalUrlDisplay')">Copy</button>
+                </div>
+            </div>
+
+            <div class="url-info">
+                <div class="url-label">Shortened URL</div>
+                <div class="url-value" id="shortenedUrlDisplay">
+                    https://lnk.spark/abc123
+                    <button class="copy-btn" onclick="copyToClipboard('shortenedUrlDisplay')">Copy</button>
+                </div>
+            </div>
+
+            <div class="url-info">
+                <div class="url-label">QR Code</div>
+                <div class="url-value">
+                    <span style="color: #ffb347;">Available after shortening</span>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="savedChars">0</div>
+                    <div class="stat-label">Characters Saved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="clickCount">0</div>
+                    <div class="stat-label">Total Clicks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="createdDate">Today</div>
+                    <div class="stat-label">Created</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Made with ✨ for efficient link sharing
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
