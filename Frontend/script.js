@@ -67,12 +67,7 @@ function displayResults(originalUrl, response) {
     "shortenedUrlDisplay"
   ).innerHTML = `${response.shortenedUrl} <button class="copy-btn" onclick="copyToClipboard('shortenedUrlDisplay')">Copy</button>`;
 
-  // Calculate and display statistics
-  const savedChars = Math.max(
-    originalUrl.length - response.shortenedUrl.length,
-    0
-  );
-  document.getElementById("savedChars").textContent = savedChars;
+
   document.getElementById("clickCount").textContent = response.clicks || 0;
   document.getElementById("createdDate").textContent = formatDate(
     response.createdAt
