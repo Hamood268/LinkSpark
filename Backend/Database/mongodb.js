@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const uri = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
 
 async function connectDB() {
   try {
@@ -10,6 +11,7 @@ async function connectDB() {
     }
 
     await mongoose.connect(uri, {
+      dbName: dbName,
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,

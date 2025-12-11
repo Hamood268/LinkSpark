@@ -31,10 +31,11 @@ router.post(
         });
       }
 
-      console.log("User submitted URL:", url);
+
 
       // Generate unique short code
       const shortCode = generateShortCode();
+      console.log(`User submitted URL: ${url}\nShortened URL: ${shortCode}`);
       
       // Check if short code already exists (optional but recommended)
       const existingUrl = await schema.findOne({ shortenUrl: shortCode });
