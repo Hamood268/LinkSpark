@@ -22,6 +22,8 @@ router.post(
     try {
       const { url } = req.body;
       const errors = validationResult(req);
+      const baseUrl = process.env.BASE_URL || "http://localhost:8000";
+
       
       if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -37,9 +39,9 @@ router.post(
       const shortCode = generateShortCode();
       console.log(`User submitted URL: ${url}\nShortened URL: ${shortCode}`);
       
-      // Check if short code already exists (optional but recommended)
-      const existingUrl = await schema.findOne({ shortenUrl: shortCode });
-      if (existingUrl) {
+      // Check if short code already exists
+      const existingCode = await schema.findOne({ shortenUrl: shortCode });
+      if (existingCode) {
         // Generate new code if collision occurs
         return res.status(500).json({
           success: false,
@@ -54,8 +56,6 @@ router.post(
       });
 
       const result = await savedUrl.save();
-
-      const baseUrl = process.env.BASE_URL || "http://localhost:8000";
       
       const response = {
         success: true,
